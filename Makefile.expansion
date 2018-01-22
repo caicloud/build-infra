@@ -1,0 +1,8 @@
+.PHONY: pre-build
+pre-build: sha256
+	go-bindata -ignore DS_Store -pkg cmd -o pkg/caimake/cmd/bindata.go -prefix hack hack/make-rules/...
+
+.PHONY: sha256 
+sha256:
+	tar -cf - --exclude=sha256sum hack/make-rules | sha256sum | cut -d " " -f 1  > hack/make-rules/sha256sum
+
