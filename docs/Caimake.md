@@ -17,42 +17,43 @@ Download directly from GIthub [release](directly)
 #### 2. Use `go get`
 
 ```shell
-go get -u https://github.com/caicloud/build-infra/...
+go get -u github.com/caicloud/build-infra/...
 ```
 
 ### Requirements
 
--   `make`
--   `sed`
--   `git`
--   `docker` for build and push container
--   `golang` for compile golang project
+-   `make` v4.2.1 or higher
+-   `sed` GNU sed, v4.4 or higher
+-   `git` v2.10.1 or higher
+-   `docker` for building and pushing container
+-   `golang` for compiling golang project, v1.8.0 or higher
 
-### Usage
+### Initialization
 
-Getting started from a git repo, use `caimake init` to initialize it. 
-
-```shell
-caimake init
-```
+Getting started from a git repo, use `caimake init <language>` to initialize it. 
+The following languages are supported now:
+- go
 
 `caimake init` will scan your project:
-
--   find all subdirectories under `cmd` as targets of `make build` 
--   find all subdirectories under `build` as targets of `make docker` 
 -   treat project's name as docker images prefix
 
-Then, it generates a `Makefile` and `.caimake` under the project root.
+for `golang`, it will:
+-   find all subdirectories under `cmd` as targets of `make build` 
+-   find all subdirectories under `build` as targets of `make container` 
+
+Then, caimake generates a `Makefile` and put `.caimake` under the project root.
 
 Now, you are able to use `make` instead of `caimake`.
 
-Use `caimake [command] —help` for more information about a command.
+Use `caimake [command] —help` for more information about teh command.
 
 See [Makefile Specification](Specification.md) for more information about detail.
 
 ### Expansibility
 
 For expansibility, user can define their own custom targets and override ENV variables in `Makefile.expansion`. The original `Makefile` will include the expansion automatically. 
+
+User SHOULD put all custom changes in `Makefile.expansion` to override the options in `Makefile`.
 
 #### pre-build hook
 
