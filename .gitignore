@@ -14,3 +14,4 @@
 .glide/
 .vscode/
 bin/
+caimake/caimake.sh

@@ -11,7 +11,7 @@ func NewCmdClean() *cli.Command {
 		Use:   "clean",
 		Short: "clean make outputs",
 		Run: func(cmd *cobra.Command, args []string) {
-			bash.Run("entrypoint/clean.sh", args)
+			bash.Run1("clean", args...)
 		},
 	})
 }

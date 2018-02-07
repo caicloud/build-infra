@@ -24,16 +24,17 @@ func newCmdGolangBuild() *cli.Command {
 		Use:   "build",
 		Short: "golang build",
 		Run: func(cmd *cobra.Command, args []string) {
-			bash.Run("entrypoint/golang.sh build", args)
+			bash.Run2("go", "build", args...)
 		},
 	})
 }
+
 func newCmdGolangUnittest() *cli.Command {
 	return cli.NewCommand(&cobra.Command{
 		Use:   "unittest",
 		Short: "golang unittest",
 		Run: func(cmd *cobra.Command, args []string) {
-			bash.Run("entrypoint/golang.sh unittest", args)
+			bash.Run2("go", "unittest", args...)
 		},
 	})
 }

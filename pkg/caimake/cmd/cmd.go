@@ -2,15 +2,9 @@ package cmd
 
 import (
 	"github.com/caicloud/build-infra/pkg/basher"
-	"github.com/caicloud/build-infra/pkg/version"
 	"github.com/caicloud/nirvana/cli"
 	"github.com/caicloud/nirvana/log"
 	"github.com/spf13/cobra"
-)
-
-const (
-	dotfile = "~/.caimake"
-	project = "make-rules"
 )
 
 var (
@@ -36,7 +30,11 @@ It follows the specification on Github caicloud/build-infra.`,
 				RestoreAsset,
 				RestoreAssets,
 			)
-			bash, err = basher.NewBasher(dotfile, project, version.Get().Version, bindata)
+			b, err := bindata.Asset("caimake.sh")
+			if err != nil {
+				log.Fatal("Error load script caimake.sh")
+			}
+			bash, err = basher.NewBasher("caimake", b, bindata)
 			if err != nil {
 				log.Fatal(err)
 			}

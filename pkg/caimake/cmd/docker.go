@@ -24,7 +24,7 @@ func newCmdDockerBuild() *cli.Command {
 		Use:   "build",
 		Short: "docker build",
 		Run: func(cmd *cobra.Command, args []string) {
-			bash.Run("entrypoint/docker.sh build", args)
+			bash.Run2("docker", "build", args...)
 		},
 	})
 }
@@ -34,7 +34,7 @@ func newCmdDockerPush() *cli.Command {
 		Use:   "push",
 		Short: "docker push",
 		Run: func(cmd *cobra.Command, args []string) {
-			bash.Run("entrypoint/docker.sh push", args)
+			bash.Run2("docker", "push", args...)
 		},
 	})
 }
