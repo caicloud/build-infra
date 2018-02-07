@@ -24,7 +24,7 @@ source "${MAKE_RULES_ROOT}/lib/logging.sh"
 log::install_errexit
 
 source "${MAKE_RULES_ROOT}/lib/version.sh"
-source "${MAKE_RULES_ROOT}/lib/golang.sh"
+source "${MAKE_RULES_ROOT}/lib/lang/golang.sh"
 source "${MAKE_RULES_ROOT}/lib/docker.sh"
 
 PRJ_OUTPUT_HOSTBIN="${PRJ_OUTPUT_BINPATH}/$(util::host_platform)"
