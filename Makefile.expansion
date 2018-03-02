@@ -1,0 +1,7 @@
+
+CAIMAKE_AUTO_UPDATE := false
+
+.PHONY: pre-build
+pre-build:
+	cd hack/make-rules && bash ./unfold.sh ./entrypoint.sh ../caimake/caimake.sh
+	go-bindata -ignore DS_Store -pkg cmd -o pkg/caimake/cmd/bindata.go -prefix hack/caimake hack/caimake/... 
