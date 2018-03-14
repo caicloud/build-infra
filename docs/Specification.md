@@ -1,6 +1,6 @@
 # Makefile Specification
 
-#### Version 0.1.0
+#### Version 0.1.1
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [BCP 14](https://tools.ietf.org/html/bcp14) [RFC2119](https://tools.ietf.org/html/rfc2119) [RFC8174](https://tools.ietf.org/html/rfc8174) when, and only when, they appear in all capitals, as shown here.
 
@@ -184,6 +184,7 @@ The Makefile MUST support the following targets for docker build.
 ```bash
 make container
 make push
+make release
 ```
 
 Rules for Makefile targets:
@@ -221,6 +222,9 @@ make push
 
 # build and push build/controller docker iamge
 make container push WHAT=build/controller
+
+# build and push docker iamges for all targets
+make release
 ```
 
 ## Language Specification
