@@ -1,7 +1,12 @@
 
 CAIMAKE_AUTO_UPDATE := false
 
+TEMP_DIR := $(shell mktemp -d)
+
 .PHONY: pre-build
 pre-build:
-	cd hack/make-rules && bash ./unfold.sh ./entrypoint.sh ../caimake/caimake.sh
+	cd hack/make-rules && bash ./unfold.sh ./entrypoint.sh $(TEMP_DIR)/caimake.sh
+	if [[ -n "$(diff $(TEMP_DIR)/caimake.sh hack/caimake/caimake.sh)" ]]; then \
+		mv $(TEMP_DIR)/caimake.sh hack/caimake/caimake.sh; \
+	fi
 	go-bindata -ignore DS_Store -pkg cmd -o pkg/caimake/cmd/bindata.go -prefix hack/caimake hack/caimake/... 
