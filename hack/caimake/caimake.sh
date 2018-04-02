@@ -9,6 +9,7 @@ set -o errexit
 # Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
 set -o nounset
 # Catch the error in pipeline.
+set -o pipefail
 
 VERBOSE="${VERBOSE:-1}"
 
