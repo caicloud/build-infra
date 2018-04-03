@@ -14,7 +14,9 @@ source "${MAKE_RULES_ROOT}/lib/init.sh"
 inline() {
 	while IFS="\n" read -r line; do
 		if [[ "${line}" =~ (\.|source)\s+.+ ]]; then
+			# get file name after source, delete the "" around it
 			file="$(echo "${line}" | cut -d' ' -f2 | tr -d '"')"
+			# replace MAKE_RULES_ROOT with its value
 			file=$(echo "${file}" | sed 's:\${MAKE_RULES_ROOT}:'${MAKE_RULES_ROOT}':g')
 			echo "$(cat ${file})"
 		else
@@ -34,8 +36,11 @@ done
 # delete MAKE_RULES_ROOT line
 sed -i '/MAKE_RULES_ROOT/d' ${output}
 
-head=$(head -10 ${output})
-tail=$(tail -n +11 ${output})
+# header until set -o pipefail
+head=$(head -12 ${output})
+# tail after set -o pipefail
+tail=$(tail -n +13 ${output})
+# delete unused options and comments
 tail=$(echo "${tail}" | sed '/^set -o errexit/d')
 tail=$(echo "${tail}" | sed '/^set -o nounset/d')
 tail=$(echo "${tail}" | sed '/^set -o pipefail/d')
