@@ -85,7 +85,7 @@ func makefileGoTmpl() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "Makefile.go.tmpl", size: 8684, mode: os.FileMode(420), modTime: time.Unix(1521726872, 0)}
+	info := bindataFileInfo{name: "Makefile.go.tmpl", size: 8684, mode: os.FileMode(420), modTime: time.Unix(1, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -105,7 +105,7 @@ func caimakeSh() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "caimake.sh", size: 37798, mode: os.FileMode(493), modTime: time.Unix(1522682435, 0)}
+	info := bindataFileInfo{name: "caimake.sh", size: 37798, mode: os.FileMode(493), modTime: time.Unix(1, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -125,7 +125,7 @@ func updateSh() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "update.sh", size: 2525, mode: os.FileMode(420), modTime: time.Unix(1521726872, 0)}
+	info := bindataFileInfo{name: "update.sh", size: 2525, mode: os.FileMode(420), modTime: time.Unix(1, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }

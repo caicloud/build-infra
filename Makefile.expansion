@@ -9,4 +9,8 @@ pre-build:
 	if [[ -n "$(diff $(TEMP_DIR)/caimake.sh hack/caimake/caimake.sh)" ]]; then \
 		mv $(TEMP_DIR)/caimake.sh hack/caimake/caimake.sh; \
 	fi
-	go-bindata -ignore DS_Store -pkg cmd -o pkg/caimake/cmd/bindata.go -prefix hack/caimake hack/caimake/... 
+	go-bindata -modtime 1 -ignore DS_Store -pkg cmd -o pkg/caimake/cmd/bindata.go -prefix hack/caimake hack/caimake/... 
+
+.PHONY: go-bindata
+go-bindata:
+	go get -u github.com/jteeuwen/go-bindata/...
