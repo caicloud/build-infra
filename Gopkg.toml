@@ -22,9 +22,10 @@
 
 
 [[constraint]]
-  branch = "master"
-  name = "github.com/mitchellh/go-homedir"
-
-[[constraint]]
   name = "github.com/spf13/cobra"
   version = "0.0.1"
+
+[prune]
+  non-go = true
+  go-tests = true
+  unused-packages = true

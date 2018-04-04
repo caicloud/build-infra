@@ -2,14 +2,17 @@
 
 
 [[projects]]
-  name = "github.com/blang/semver"
+  name = "github.com/Masterminds/semver"
   packages = ["."]
-  revision = "2ee87856327ba09384cabd113bc6b5d174e9ec0f"
-  version = "v3.5.1"
+  revision = "8d82589cda2d7b5b9167396841975c4535c9bec6"
+  version = "v1.4.1"
 
 [[projects]]
   name = "github.com/caicloud/nirvana"
-  packages = ["cli","log"]
+  packages = [
+    "cli",
+    "log"
+  ]
   revision = "6b58090406bf9c277ad394296dcf9723f85a86c0"
   version = "v0.1.0-alpha.0"
 
@@ -28,13 +31,27 @@
 [[projects]]
   branch = "master"
   name = "github.com/hashicorp/hcl"
-  packages = [".","hcl/ast","hcl/parser","hcl/scanner","hcl/strconv","hcl/token","json/parser","json/scanner","json/token"]
+  packages = [
+    ".",
+    "hcl/ast",
+    "hcl/parser",
+    "hcl/scanner",
+    "hcl/strconv",
+    "hcl/token",
+    "json/parser",
+    "json/scanner",
+    "json/token"
+  ]
   revision = "23c074d0eceb2b8a5bfdbb271ab780cde70f05a8"
 
 [[projects]]
   branch = "master"
   name = "github.com/inconshreveable/go-update"
-  packages = [".","internal/binarydist","internal/osext"]
+  packages = [
+    ".",
+    "internal/binarydist",
+    "internal/osext"
+  ]
   revision = "8152e7eb6ccf8679a64582a66b78519688d156ad"
 
 [[projects]]
@@ -57,12 +74,6 @@
 
 [[projects]]
   branch = "master"
-  name = "github.com/mitchellh/go-homedir"
-  packages = ["."]
-  revision = "b8bc1bf767474819792c23f32d8286a45736f1c6"
-
-[[projects]]
-  branch = "master"
   name = "github.com/mitchellh/mapstructure"
   packages = ["."]
   revision = "b4575eea38cca1123ec2dc90c26529b5c5acfcff"
@@ -75,7 +86,10 @@
 
 [[projects]]
   name = "github.com/spf13/afero"
-  packages = [".","mem"]
+  packages = [
+    ".",
+    "mem"
+  ]
   revision = "bb8f1927f2a9d3ab41c9340aa034f6b803f4359c"
   version = "v1.0.2"
 
@@ -118,7 +132,14 @@
 [[projects]]
   branch = "master"
   name = "golang.org/x/text"
-  packages = ["internal/gen","internal/triegen","internal/ucd","transform","unicode/cldr","unicode/norm"]
+  packages = [
+    "internal/gen",
+    "internal/triegen",
+    "internal/ucd",
+    "transform",
+    "unicode/cldr",
+    "unicode/norm"
+  ]
   revision = "e19ae1496984b1c655b8044a65c0300a3c878dd3"
 
 [[projects]]
@@ -130,6 +151,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "8f3a9246da0652d6f5bab3bd5726a7ee4719f1abd1be6fd3ed824bcc56e55ead"
+  inputs-digest = "ed0476723ff4bee9d3f5a2b2bcc878126d841df657b3119aaaa15d0bef04a786"
   solver-name = "gps-cdcl"
   solver-version = 1
