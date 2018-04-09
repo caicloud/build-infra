@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/blang/semver"
+	"github.com/Masterminds/semver"
 	"github.com/caicloud/build-infra/pkg/update"
 	"github.com/caicloud/build-infra/pkg/version"
 	"github.com/caicloud/nirvana/cli"
@@ -28,16 +28,16 @@ func NewCmdUpdate() *cli.Command {
 				return
 			}
 
-			latestSemver, err := semver.Make(latest.Version)
+			latestSemver, err := semver.NewVersion(latest.Version)
 			if err != nil {
 				log.Fatalf("latest version [%v] does not follow semantic version, %v", latest.Version, err)
 			}
-			currentSemver, err := semver.Make(current)
+			currentSemver, err := semver.NewVersion(current)
 			if err != nil {
 				log.Fatalf("current version [%v] does not follow semantic version, %v", current, err)
 			}
 
-			if currentSemver.GTE(latestSemver) {
+			if currentSemver.GreaterThan(latestSemver) {
 				log.Infof("The binary is up to date!")
 				log.Infof("Caimake %v is currently the newest version available.", current)
 				return

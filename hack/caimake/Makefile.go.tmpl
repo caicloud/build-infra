@@ -285,7 +285,7 @@ push:
 	@echo "$$PUSH_HELP_INFO"
 else
 push: check-caimake
-	$(CAIMAKE) docker push $@
+	$(CAIMAKE) docker push $(WHAT)
 endif 
 
 

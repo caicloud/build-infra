@@ -190,5 +190,5 @@ func detectGoCmdAndDocker(dir string) ([]string, []string, error) {
 		// log.Fatalf("Error get sub dirs of builds, %v", err)
 		return nil, nil, err
 	}
-	return addprefix("cmd/", cmds), addprefix("builds/", builds), nil
+	return addprefix("cmd/", cmds), addprefix("build/", builds), nil
 }
