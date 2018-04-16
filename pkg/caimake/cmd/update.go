@@ -37,7 +37,7 @@ func NewCmdUpdate() *cli.Command {
 				log.Fatalf("current version [%v] does not follow semantic version, %v", current, err)
 			}
 
-			if currentSemver.GreaterThan(latestSemver) {
+			if currentSemver.GreaterThan(latestSemver) || currentSemver.Equal(latestSemver) {
 				log.Infof("The binary is up to date!")
 				log.Infof("Caimake %v is currently the newest version available.", current)
 				return
