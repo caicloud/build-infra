@@ -11,7 +11,7 @@
 #   all: Build code.
 #   test: Run tests.
 #   clean: Clean up.
-# 
+#
 # see https://github.com/caicloud/build-infra/blob/master/docs/Specification.md for more information.
 
 
@@ -40,17 +40,17 @@ LOCAL_BUILD ?= true
 GO_ONBUILD_IMAGE := cargo.caicloudprivatetest.com/caicloud/golang:1.9.2-alpine3.6
 # Building for these platforms.
 GO_BUILD_PLATFORMS ?= linux/amd64 darwin/amd64
-# Pre-defined all directory names of targets for go build. 
+# Pre-defined all directory names of targets for go build.
 GO_BUILD_TARGETS := cmd/caimake
 # Targets using CGO_ENABLED=0. It is a single word without dir prefix.
-GO_STATIC_LIBRARIES := 
+GO_STATIC_LIBRARIES :=
 # Skip go unittest under the following dir.
 GO_TEST_EXCEPTIONS :=
 
 # Pre-defined all directories containing Dockerfiles for building containers.
 DOCKER_BUILD_TARGETS :=
 # Container registries.
-DOCKER_REGISTRIES := cargo.caicloudprivatetest.com/caicloud 
+DOCKER_REGISTRIES := cargo.caicloudprivatetest.com/caicloud
 # Force pushing to override images in remote registries
 DOCKER_FORCE_PUSH ?= true
 # Container image prefix and suffix added to targets.
@@ -58,7 +58,7 @@ DOCKER_FORCE_PUSH ?= true
 #   $[REGISTRY]/$[IMAGE_PREFIX]$[TARGET]$[IMAGE_SUFFIX]:$[VERSION]
 #   $[REGISTRY] is an item from $[DOCKER_REGISTRIES], $[TARGET] is the basename from $[DOCKER_BUILD_TARGETS[@]].
 DOCKER_IMAGE_PREFIX := build-infra-
-DOCKER_IMAGE_SUFFIX := 
+DOCKER_IMAGE_SUFFIX :=
 
 # =========================================================
 # variables for caimake.
@@ -90,7 +90,7 @@ endif
 
 # check caimake binary
 .PHONY: check-caimake
-check-caimake: 
+check-caimake:
 ifeq ($(CAIMAKE_OFFLINE),false)
 	@source .caimake/update.sh && caimake::update
 endif
@@ -123,7 +123,7 @@ all build:
 else
 all build: check-caimake $(PRE_BUILD)
 	$(CAIMAKE) go build $(WHAT)
-endif 
+endif
 
 define GO_BUILD_HELP_INFO
 # Build code.
@@ -148,10 +148,10 @@ $(GO_BUILD_TARGETS):
 else
 $(GO_BUILD_TARGETS): check-caimake $(PRE_BUILD)
 	$(CAIMAKE) go build $@
-endif 
+endif
 
 define UNITTEST_HELP_INFO
-# Run uniitest 
+# Run uniitest
 #
 # Args:
 #   GOFLAGS: Extra flags to pass to 'go' when building.
@@ -174,7 +174,7 @@ unittest:
 else
 unittest: check-caimake
 	$(CAIMAKE) go unittest
-endif 
+endif
 
 define BUILD_LOCAL_HELP_INFO
 # Build code on local.
@@ -202,8 +202,8 @@ build-local:
 	@echo "$$BUILD_LOCAL_HELP_INFO"
 else
 build-local: check-caimake $(PRE_BUILD)
-	LOCAL_BUILD=true $(CAIMAKE) go build $(WHAT) 
-endif 
+	LOCAL_BUILD=true $(CAIMAKE) go build $(WHAT)
+endif
 
 define BUILD_IN_CONTAINER_HELP_INFO
 # Build code in container.
@@ -231,8 +231,8 @@ build-in-container:
 	@echo "$$BUILD_LINUX_HELP_INFO"
 else
 build-in-container: check-caimake $(PRE_BUILD)
-	LOCAL_BUILD=false $(CAIMAKE) go build $(WHAT) 
-endif 
+	LOCAL_BUILD=false $(CAIMAKE) go build $(WHAT)
+endif
 
 define CONTAINER_HELP_INFO
 # Build docker image.
@@ -244,20 +244,20 @@ define CONTAINER_HELP_INFO
 #   make container
 #   make container WAHT=build/server
 endef
-.PHONY: container 
+.PHONY: container
 ifeq ($(HELP),y)
 container:
 	@echo "$$CONTAINER_HELP_INFO"
 else
 container: check-caimake
 	$(CAIMAKE) docker build $(WHAT)
-endif 
+endif
 
-define DOCKER_BUILD_HELP_INFO 
+define DOCKER_BUILD_HELP_INFO
  # Build docker image.
 #
 # Example:
-#   make $(1)  
+#   make $(1)
 endef
 .PHONY: $(DOCKER_BUILD_TARGETS)
 ifeq ($(HELP),y)
@@ -266,7 +266,7 @@ $(DOCKER_BUILD_TARGETS):
 else
 $(DOCKER_BUILD_TARGETS): check-caimake
 	$(CAIMAKE) docker build $@
-endif 
+endif
 
 define PUSH_HELP_INFO
 # Push docker image.
@@ -279,14 +279,14 @@ define PUSH_HELP_INFO
 #   make push
 #   make push WAHT=build/server
 endef
-.PHONY: push 
+.PHONY: push
 ifeq ($(HELP),y)
 push:
 	@echo "$$PUSH_HELP_INFO"
 else
 push: check-caimake
 	$(CAIMAKE) docker push $@
-endif 
+endif
 
 
 define CLEAN_HELP_INFO
