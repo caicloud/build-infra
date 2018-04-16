@@ -684,6 +684,26 @@ golang::setup_env() {
 	export GO15VENDOREXPERIMENT=1
 }
 
+golang::recognize_gopath() {
+	local gopaths=($(util::split "${GOPATH:-}" ":"))
+	[[ -n ${gopaths:-} ]] || {
+		log::error_exit "!!! No GOPATH set in env"
+	}
+
+	local pkg=${PRJ_ROOT}
+
+	for gopath in ${gopaths[@]}; do
+		# delete gopath in pkg
+		local gosrc="${gopath%/}/src/"
+		if [[ "${pkg}" =~ ${gosrc} ]]; then
+			echo ${gopath%/}
+			return
+		fi
+	done
+
+	log::error_exit "!!! No GOPATH matches this project"
+}
+
 # This will take binaries from $GOPATH/bin and copy them to the appropriate
 # place in ${GO_OUTPUT_BINDIR}
 #
@@ -697,7 +717,7 @@ golang::place_bins() {
 	host_platform=$(golang::host_platform)
 
 	V=2 log::status "Placing binaries"
-
+	local gopath="$(golang::recognize_gopath)"
 	local platform
 	for platform in "${GO_BUILD_PLATFORMS[@]}"; do
 		# The substitution on platform_src below will replace all slashes with
@@ -707,12 +727,12 @@ golang::place_bins() {
 			# rm -f "${THIS_PLATFORM_BIN}"
 			log::status "Linking" "${PRJ_OUTPUT_BINPATH}/${platform_src}/*" "->" "${PRJ_OUTPUT_BINPATH}/*"
 			ln -sf ${PRJ_OUTPUT_BINPATH}/${platform_src}/* "${PRJ_OUTPUT_BINPATH}"
-			log::status "Copying" "${PRJ_OUTPUT_BINPATH}/${platform_src}/*" "->" "${GOPATH}/bin/"
-			cp ${PRJ_OUTPUT_BINPATH}/${platform_src}/* ${GOPATH}/bin/
+			log::status "Copying" "${PRJ_OUTPUT_BINPATH}/${platform_src}/*" "->" "${gopath}/bin/"
+			cp ${PRJ_OUTPUT_BINPATH}/${platform_src}/* ${gopath}/bin/
 		fi
 
-		# optional: place binaries on GOPATH/bin/GOOS/GOARCH
-		# local full_binpath_src="${GOPATH}/bin/${platform_src}"
+		# optional: place binaries on gopath/bin/GOOS/GOARCH
+		# local full_binpath_src="${gopath}/bin/${platform_src}"
 		# if [[ -d "${full_binpath_src}" ]]; then
 		# 	mkdir -p "${PRJ_OUTPUT_BINPATH}/${platform}"
 		# 	find "${full_binpath_src}" -maxdepth 1 -type f -exec \
