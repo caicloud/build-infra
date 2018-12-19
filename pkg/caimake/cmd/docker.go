@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"os"
+
 	"github.com/caicloud/nirvana/cli"
 	"github.com/spf13/cobra"
 )
@@ -23,8 +25,12 @@ func newCmdDockerBuild() *cli.Command {
 	return cli.NewCommand(&cobra.Command{
 		Use:   "build",
 		Short: "docker build",
-		Run: func(cmd *cobra.Command, args []string) {
-			bash.Run2("docker", "build", args...)
+		RunE: func(cmd *cobra.Command, args []string) error {
+			code, err := bash.Run2("docker", "build", args...)
+			if code > 0 {
+				os.Exit(code)
+			}
+			return err
 		},
 	})
 }
@@ -33,8 +39,12 @@ func newCmdDockerPush() *cli.Command {
 	return cli.NewCommand(&cobra.Command{
 		Use:   "push",
 		Short: "docker push",
-		Run: func(cmd *cobra.Command, args []string) {
-			bash.Run2("docker", "push", args...)
+		RunE: func(cmd *cobra.Command, args []string) error {
+			code, err := bash.Run2("docker", "push", args...)
+			if code > 0 {
+				os.Exit(code)
+			}
+			return err
 		},
 	})
 }

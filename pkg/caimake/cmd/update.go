@@ -14,10 +14,11 @@ func NewCmdUpdate() *cli.Command {
 	cmd := cli.NewCommand(&cobra.Command{
 		Use:   "update",
 		Short: "update caimake",
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			latest, err := update.GetGithubLatestRelease(cli.GetString("repo"))
 			if err != nil {
 				log.Fatal(err)
+				return err
 			}
 
 			current := version.Get().Version
@@ -25,27 +26,31 @@ func NewCmdUpdate() *cli.Command {
 			if cli.GetBool("check") {
 				log.Infof("Current version: %v", current)
 				log.Infof("Latest  version: %v", latest.Version)
-				return
+				return nil
 			}
 
 			latestSemver, err := semver.NewVersion(latest.Version)
 			if err != nil {
 				log.Fatalf("latest version [%v] does not follow semantic version, %v", latest.Version, err)
+				return err
 			}
 			currentSemver, err := semver.NewVersion(current)
 			if err != nil {
 				log.Fatalf("current version [%v] does not follow semantic version, %v", current, err)
+				return err
 			}
 
 			if currentSemver.GreaterThan(latestSemver) || currentSemver.Equal(latestSemver) {
 				log.Infof("The binary is up to date!")
 				log.Infof("Caimake %v is currently the newest version available.", current)
-				return
+				return nil
 			}
 			err = update.DoUpdate(latest.DownloadURL, latest.Size)
 			if err != nil {
 				log.Fatal(err)
+				return err
 			}
+			return nil
 		},
 	})
 

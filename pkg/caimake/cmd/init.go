@@ -48,20 +48,23 @@ func newCmdInitGo() *cli.Command {
 	return cli.NewCommand(&cobra.Command{
 		Use:   "go",
 		Short: "init a new golang project",
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			dir, err := os.Getwd()
 			if err != nil {
 				log.Fatalf("Error get current work dir, %v", err)
+				return err
 			}
 			err = restoreCaimake(dir)
 			if err != nil {
 				log.Fatal(err)
+				return err
 			}
 			cmds, builds, err := detectGoCmdAndDocker(dir)
 			if err != nil {
 				log.Fatalf("Error get sub dirs of builds, %v", err)
+				return err
 			}
-			err = restoreMakefile(dir, "go", map[string]interface{}{
+			return restoreMakefile(dir, "go", map[string]interface{}{
 				"cmds":   cmds,
 				"builds": builds,
 			})
