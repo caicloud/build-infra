@@ -19,7 +19,7 @@ func NewCaimakeCommand() *cli.Command {
 		Long: `caimake helps you to build your project appropriately
 
 It follows the specification on Github caicloud/build-infra.`,
-		PersistentPreRun: func(cmd *cobra.Command, args []string) {
+		PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
 			var err error
 			bindata := basher.NewBindata(
 				Asset,
@@ -33,11 +33,14 @@ It follows the specification on Github caicloud/build-infra.`,
 			b, err := bindata.Asset("caimake.sh")
 			if err != nil {
 				log.Fatal("Error load script caimake.sh")
+				return err
 			}
 			bash, err = basher.NewBasher("caimake", b, bindata)
 			if err != nil {
 				log.Fatal(err)
+				return err
 			}
+			return nil
 		},
 		Run: runHelp,
 	})

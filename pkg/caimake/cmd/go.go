@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"os"
+
 	"github.com/caicloud/nirvana/cli"
 	"github.com/spf13/cobra"
 )
@@ -23,8 +25,12 @@ func newCmdGolangBuild() *cli.Command {
 	return cli.NewCommand(&cobra.Command{
 		Use:   "build",
 		Short: "golang build",
-		Run: func(cmd *cobra.Command, args []string) {
-			bash.Run2("go", "build", args...)
+		RunE: func(cmd *cobra.Command, args []string) error {
+			code, err := bash.Run2("go", "build", args...)
+			if code > 0 {
+				os.Exit(code)
+			}
+			return err
 		},
 	})
 }
@@ -33,8 +39,12 @@ func newCmdGolangUnittest() *cli.Command {
 	return cli.NewCommand(&cobra.Command{
 		Use:   "unittest",
 		Short: "golang unittest",
-		Run: func(cmd *cobra.Command, args []string) {
-			bash.Run2("go", "unittest", args...)
+		RunE: func(cmd *cobra.Command, args []string) error {
+			code, err := bash.Run2("go", "unittest", args...)
+			if code > 0 {
+				os.Exit(code)
+			}
+			return err
 		},
 	})
 }
